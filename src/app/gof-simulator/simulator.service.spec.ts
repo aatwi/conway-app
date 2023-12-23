@@ -2,7 +2,6 @@ import { Cell, DEAD_CELL, LIVE_CELL } from './../model/cell';
 import { TestBed } from '@angular/core/testing';
 
 import { SimulatorService } from './simulator.service';
-import { LOCALE_ID } from '@angular/core';
 
 describe('SimulatorService', () => {
   let service: SimulatorService;

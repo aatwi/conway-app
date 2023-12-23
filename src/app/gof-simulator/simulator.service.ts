@@ -63,12 +63,14 @@ export class SimulatorService {
         newGrid[i][j] = this.getNextCellState(i, j);
       }
     }
+
     return newGrid;
   }
 
   private initializeGrid(): Cell[][]{
     let size = this.grid.length;
     let newGrid: Cell[][] = [];
+
     for(let i = 0; i < size; i++) {
       newGrid[i] = [];
       for(let y = 0; y < size; y++) {

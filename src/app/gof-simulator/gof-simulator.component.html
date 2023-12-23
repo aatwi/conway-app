@@ -1,1 +1,9 @@
-<p>gof-simulator works!</p>
+<mat-grid-list cols=35>
+  @for (row of grid; track row) {
+    @for (cell of row; track cell) {
+      <mat-grid-tile [style.background]="getColor(cell)"></mat-grid-tile>
+    }
+  }
+</mat-grid-list>
+
+<button (click)="generateNextState()">Next World</button>
