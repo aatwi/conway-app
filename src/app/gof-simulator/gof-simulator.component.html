@@ -1,7 +1,19 @@
-<mat-grid-list cols=35>
-  @for (row of grid; track row) {
+
+<div>
+  <mat-form-field>
+    <mat-label>Select Grid</mat-label>
+    <mat-select (selectionChange)="onChange($event)">
+      <mat-option *ngFor="let grid of grids" [value]="grid.value">
+        {{ grid.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<mat-grid-list cols={{getColumn()}} rowHeight="10" class="g1">
+  @for (row of selectedGrid; track row) {
     @for (cell of row; track cell) {
-      <mat-grid-tile [style.background]="getColor(cell)"></mat-grid-tile>
+      <mat-grid-tile [style.background]="getColor(cell)" ></mat-grid-tile>
     }
   }
 </mat-grid-list>

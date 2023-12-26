@@ -1,53 +1,65 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { Cell, DEAD_CELL, LIVE_CELL } from '../model/cell';
+import { BEACON, BLNKER, Cell, DEAD_CELL, LIVE_CELL, TOAD } from '../model/cell';
 import { SimulatorService } from './simulator.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+
+interface Grid {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-gof-simulator',
   standalone: true,
-  imports: [CommonModule, MatGridListModule],
+  imports: [CommonModule, MatGridListModule, MatInputModule, MatSelectModule, MatFormFieldModule],
   templateUrl: './gof-simulator.component.html',
-  styleUrl: './gof-simulator.component.css'
+  styleUrl: './gof-simulator.component.css',
+  providers: []
 })
 export class GofSimulatorComponent  {
   simulator: SimulatorService = new SimulatorService();
+  selectedGrid: Cell[][] | undefined;
 
-  cols: number = 6;
+  gridsMap = new Map([
+    ["blinker", BLNKER],
+    ["toad", TOAD],
+    ["beacon", BEACON]
+  ]);
 
-  grid: Cell[][] = [
-    [ DEAD_CELL,  DEAD_CELL, DEAD_CELL,  DEAD_CELL,  DEAD_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  DEAD_CELL, DEAD_CELL,  DEAD_CELL,  DEAD_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  DEAD_CELL, LIVE_CELL,  LIVE_CELL,  LIVE_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  LIVE_CELL, LIVE_CELL,  LIVE_CELL,  DEAD_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  DEAD_CELL, DEAD_CELL,  DEAD_CELL,  DEAD_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  DEAD_CELL, DEAD_CELL,  DEAD_CELL,  DEAD_CELL,  DEAD_CELL]
-  ];
 
-  grid2: Cell[][] = [
-    [ DEAD_CELL,  DEAD_CELL, DEAD_CELL,  DEAD_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  DEAD_CELL, LIVE_CELL,  DEAD_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  DEAD_CELL, LIVE_CELL,  DEAD_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  DEAD_CELL, LIVE_CELL,  DEAD_CELL,  DEAD_CELL],
-    [ DEAD_CELL,  DEAD_CELL, DEAD_CELL,  DEAD_CELL,  DEAD_CELL]
+  grids: Grid[] = [
+    {value: 'blinker', viewValue: 'Blinker'},
+    {value: 'toad', viewValue: 'Toad'},
+    {value: 'beacon', viewValue: 'Beacon'},
+    {value: 'pulsar', viewValue: 'Pulsar'},
   ];
 
   constructor() {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.cols = 6;
   }
 
   generateNextState() {
-    this.simulator.setGrid(this.grid);
-    this.grid = this.simulator.generateNextState();
+    if(this.selectedGrid != undefined) {
+      this.simulator.setGrid(this.selectedGrid);
+      this.selectedGrid = this.simulator.generateNextState();
+    }
   }
 
   getColor(cell: Cell) {
     return cell === LIVE_CELL ? 'black' : 'white';
+  }
+
+  onChange($event: MatSelectChange) {
+    this.selectedGrid = this.gridsMap.get($event.value)
+  }
+
+  getColumn() {
+    return this.selectedGrid?.length;
   }
 }

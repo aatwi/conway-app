@@ -1,3 +1,7 @@
 .mat-grid-tile {
   border: solid 1px #000;
 }
+
+.g1 {
+  width: 5% !important ;
+}
