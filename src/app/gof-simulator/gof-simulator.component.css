@@ -2,7 +2,23 @@
   border: solid 1px #000;
 }
 
-.g1 {
-  width: 25%;
-  height: 25%;
+.drop {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.row { 
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+}
+
+.button {
+  height: 30px;
+  margin-left: 35px;
+}
+
+.drawing-grid {
+  width: 500px;
+  height: 500px;
 }

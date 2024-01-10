@@ -1,21 +1,24 @@
-
-<div>
-  <mat-form-field>
+<div class="row"> 
+  <mat-form-field class="drop">
     <mat-label>Select Grid</mat-label>
     <mat-select (selectionChange)="onChange($event)">
-      <mat-option *ngFor="let grid of grids" [value]="grid.value">
-        {{ grid.viewValue }}
-      </mat-option>
+      @for (item of grids; track item) {
+        <mat-option [value]="item.value">{{ item.viewValue }}</mat-option>  
+      }
     </mat-select>
   </mat-form-field>
+
+  <button (click)="generateNextState()" class="button">Next World</button>
 </div>
 
-<mat-grid-list cols={{getColumn()}} rowHeight="10" class="g1">
-  @for (row of selectedGrid; track row) {
-    @for (cell of row; track cell) {
-      <mat-grid-tile [style.background]="getColor(cell)" ></mat-grid-tile>
+<div class="drawing-grid"> 
+  <mat-grid-list cols={{getColumn()}} rowHeight="1:1">
+    @for (row of selectedGrid; track row) {
+      @for (cell of row; track cell) {
+        <mat-grid-tile [style.background]="getColor(cell)" ></mat-grid-tile>
+      }
     }
-  }
-</mat-grid-list>
+  </mat-grid-list>
+</div> 
 
-<button (click)="generateNextState()">Next World</button>
+
