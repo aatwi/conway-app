@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { BEACON, BLNKER, Cell, LIVE_CELL, SIMKIN, TOAD } from '../model/cell';
+import { BEACON, BLNKER, Cell, LIVE_CELL, PENTA, SIMKIN, TOAD } from '../model/cell';
 import { SimulatorService } from './simulator.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -28,7 +28,8 @@ export class GofSimulatorComponent  {
     ["blinker", BLNKER],
     ["toad", TOAD],
     ["beacon", BEACON],
-    ["simkin", SIMKIN]
+    ["simkin", SIMKIN], 
+    ["penta", PENTA]
   ]);
 
 
@@ -37,7 +38,8 @@ export class GofSimulatorComponent  {
     {value: 'toad', viewValue: 'Toad'},
     {value: 'beacon', viewValue: 'Beacon'},
     {value: 'pulsar', viewValue: 'Pulsar'},
-    {value: 'simkin', viewValue: 'Simkin'}
+    {value: 'simkin', viewValue: 'Simkin'}, 
+    {value: 'penta', viewValue: 'Penta Decathlon'}
   ];
 
   constructor() {
