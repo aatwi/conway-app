@@ -1,14 +1,14 @@
 <div class="row"> 
   <mat-form-field class="drop">
     <mat-label>Select Grid</mat-label>
-    <mat-select (selectionChange)="onChange($event)">
+    <mat-select (selectionChange)="onChange($event)" class="mat_label">
       @for (item of grids; track item) {
         <mat-option [value]="item.value">{{ item.viewValue }}</mat-option>  
       }
     </mat-select>
   </mat-form-field>
 
-  <button (click)="generateNextState()" class="button">Next World</button>
+  <button id="btn_start" (click)="generateNextState()"  [disabled]="isDisabled()" class="button">{{actionDisplayText}}</button>
 </div>
 
 <div class="drawing-grid"> 

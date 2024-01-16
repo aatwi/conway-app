@@ -6,6 +6,11 @@
   height: 50px;
   margin-bottom: 10px;
   padding-top: 10px;
+  background-color: #ade1fa;;
+}
+
+.mat_label {
+  padding-top: 10px;
 }
 
 .row { 

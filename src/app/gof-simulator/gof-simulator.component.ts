@@ -6,6 +6,7 @@ import { SimulatorService } from './simulator.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { Observable, Subscription, timer } from 'rxjs';
 
 interface Grid {
   value: string;
@@ -21,9 +22,16 @@ interface Grid {
   providers: []
 })
 export class GofSimulatorComponent  {
+  private static START: string = "Start";
+  private static STOP: string = "Stop";
+
   simulator: SimulatorService = new SimulatorService();
   selectedGrid: Cell[][] | undefined;
-
+  actionDisplayText: string = GofSimulatorComponent.START;
+  
+  subscription: Subscription | undefined;
+  timerObersver: Observable<number> = timer(0, 500);
+  
   gridsMap = new Map([
     ["blinker", BLNKER],
     ["toad", TOAD],
@@ -48,11 +56,32 @@ export class GofSimulatorComponent  {
   ngOnInit(): void {
   }
 
+  isDisabled(): boolean {
+    return this.selectedGrid == undefined;
+  }
+
   generateNextState() {
+    if(this.actionDisplayText === GofSimulatorComponent.START) {
+      this.subscription = this.timerObersver.subscribe(() => {
+        this.run();
+      })
+    }else {
+      if(this.subscription != undefined) {
+        this.subscription.unsubscribe();
+      }
+    }
+    this.updateActionsDisplayText();
+  }
+
+  private run() {
     if(this.selectedGrid != undefined) {
       this.simulator.setGrid(this.selectedGrid);
       this.selectedGrid = this.simulator.generateNextState();
     }
+  }
+
+  private updateActionsDisplayText() {
+    this.actionDisplayText = this.actionDisplayText === GofSimulatorComponent.START ? GofSimulatorComponent.STOP : GofSimulatorComponent.START;
   }
 
   getColor(cell: Cell) {
