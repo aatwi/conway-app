@@ -1,1 +1,34 @@
 name: App CI
+
+on:
+    push:
+        branches: ['main']
+    pull_request:
+        branches: ['main']
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [20]
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup Node
+              uses: actions/setup-node@v3
+              with:
+                node-version: $
+                cache: 'npm'
+                cache-dependency-path: packace-lock.json
+
+            - name: Install Dependencies
+              run: npm ci
+
+            - name: Run Tests
+              run: npm run test
+
+            - name: Build
+              run: npm run build
+
