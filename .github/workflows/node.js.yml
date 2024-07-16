@@ -22,7 +22,7 @@ jobs:
               with:
                 node-version: ${{ matrix.node-version }}
                 cache: 'npm'
-                cache-dependency-path: packace-lock.json
+                cache-dependency-path: '**/packace-lock.json'
 
             - name: Install Dependencies
               run: npm ci
