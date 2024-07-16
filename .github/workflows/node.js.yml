@@ -8,6 +8,7 @@ on:
 
 jobs:
     build:
+        name: Build App
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -16,10 +17,10 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
-            - name: Setup Node
+            - name: Setup Node $
               uses: actions/setup-node@v3
               with:
-                node-version: $
+                node-version: ${{ matrix.node-version }}
                 cache: 'npm'
                 cache-dependency-path: packace-lock.json
 
